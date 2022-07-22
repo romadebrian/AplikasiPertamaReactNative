@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
-import Miku from './Miku.jpg';
+import Miku from '../../assets/image/Miku.jpg';
 
-const StylingReactNativeComponent = () => {
+const StylingComponent = () => {
   return (
     <View>
       <Text style={styles.text}>Styling Componenet</Text>
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StylingReactNativeComponent;
+export default StylingComponent;
