@@ -6,6 +6,7 @@ import MateriFlexBox from './pages/FlexBox';
 import PositionReactNative from './pages/Position';
 import PropsDinamis from './pages/PropsDinamis';
 import StateDinamis from './pages/StateDinamis';
+import Communication from './pages/Communication';
 const App = () => {
   const [isShow, setIsShow] = useState(true);
   useEffect(() => {
@@ -16,12 +17,13 @@ const App = () => {
   return (
     <View>
       <ScrollView>
-        {/* <SampleComponent />
-        <StylingReactNativeComponent />
-        <MateriFlexBox />
-        <PositionReactNative />
-        <PropsDinamis /> */}
-        <StateDinamis />
+        {/* <SampleComponent /> */}
+        {/* <StylingReactNativeComponent /> */}
+        {/* <MateriFlexBox /> */}
+        {/* <PositionReactNative /> */}
+        {/* <PropsDinamis /> */}
+        {/* <StateDinamis /> */}
+        <Communication />
       </ScrollView>
     </View>
   );
