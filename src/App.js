@@ -7,6 +7,7 @@ import PositionReactNative from './pages/Position';
 import PropsDinamis from './pages/PropsDinamis';
 import StateDinamis from './pages/StateDinamis';
 import Communication from './pages/Communication';
+import BasicJavascript from './pages/BasicJavaScript';
 const App = () => {
   const [isShow, setIsShow] = useState(true);
   useEffect(() => {
@@ -23,7 +24,8 @@ const App = () => {
         {/* <PositionReactNative /> */}
         {/* <PropsDinamis /> */}
         {/* <StateDinamis /> */}
-        <Communication />
+        {/* <Communication /> */}
+        <BasicJavascript />
       </ScrollView>
     </View>
   );
