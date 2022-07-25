@@ -11,6 +11,7 @@ import BasicJavascript from './pages/BasicJavaScript';
 import ReactNativeSVG from './pages/ReactNativeSVG';
 import CallAPIVanilla from './pages/CallAPIVanilla';
 import CallAPIAxios from './pages/CallAPIAxios';
+import LocalAPI from './pages/LocalAPI';
 const App = () => {
   const [isShow, setIsShow] = useState(true);
   useEffect(() => {
@@ -31,7 +32,8 @@ const App = () => {
         {/* <BasicJavascript /> */}
         {/* <ReactNativeSVG /> */}
         {/* <CallAPIVanilla /> */}
-        <CallAPIAxios />
+        {/* <CallAPIAxios /> */}
+        <LocalAPI />
       </ScrollView>
     </View>
   );
