@@ -1,8 +1,16 @@
-import {Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Axios from 'axios';
 
-const Item = ({avatar, name, email, bidang}) => {
+const Item = ({name, email, bidang, onPress}) => {
   return (
     <View style={styles.itemContainer}>
       {/* <Image
@@ -11,12 +19,14 @@ const Item = ({avatar, name, email, bidang}) => {
         }}
         style={styles.avatar}
       /> */}
-      <Image
-        source={{
-          uri: `https://i.pravatar.cc/150?u=${email}`,
-        }}
-        style={styles.avatar}
-      />
+      <TouchableOpacity onPress={onPress}>
+        <Image
+          source={{
+            uri: `https://i.pravatar.cc/150?u=${email}`,
+          }}
+          style={styles.avatar}
+        />
+      </TouchableOpacity>
       <View style={styles.desc}>
         <Text style={styles.descName}>{name}</Text>
         <Text style={styles.descEmail}>{email}</Text>
@@ -32,6 +42,8 @@ const LocalAPI = () => {
   const [email, setEmail] = useState('');
   const [bidang, setBidang] = useState('');
   const [users, setUsers] = useState([]);
+  const [button, setButton] = useState('SIMPAN');
+  const [selectedUser, setSelectedUser] = useState({});
 
   useEffect(() => {
     getData();
@@ -46,13 +58,26 @@ const LocalAPI = () => {
 
     console.log('data before send ', data);
 
-    Axios.post('http://10.0.2.2:3000/users', data).then(res => {
-      console.log(res);
-      setName('');
-      setEmail('');
-      setBidang('');
-      getData();
-    });
+    if (button === 'SIMPAN') {
+      Axios.post('http://10.0.2.2:3000/users', data).then(res => {
+        console.log(res);
+        setName('');
+        setEmail('');
+        setBidang('');
+        getData();
+      });
+    } else if (button === 'UPDATE') {
+      Axios.put(`http://10.0.2.2:3000/users/${selectedUser.id}`, data).then(
+        res => {
+          console.log(res);
+          setName('');
+          setEmail('');
+          setBidang('');
+          setButton('SIMPAN');
+          getData();
+        },
+      );
+    }
   };
 
   const getData = () => {
@@ -60,6 +85,16 @@ const LocalAPI = () => {
       console.log('res ', res);
       setUsers(res.data);
     });
+  };
+
+  const selectItem = item => {
+    console.log('selected item ', item);
+
+    setSelectedUser(item);
+    setName(item.name);
+    setEmail(item.email);
+    setBidang(item.bidang);
+    setButton('UPDATE');
   };
   return (
     <View style={styles.container}>
@@ -83,7 +118,7 @@ const LocalAPI = () => {
         value={bidang}
         onChangeText={value => setBidang(value)}
       />
-      <Button title="Simpan" onPress={submit} />
+      <Button title={button} onPress={submit} />
       <View style={styles.line} />
 
       {users.map(user => {
@@ -93,6 +128,7 @@ const LocalAPI = () => {
             name={user.name}
             email={user.email}
             bidang={user.bidang}
+            onPress={() => selectItem(user)}
           />
         );
       })}
