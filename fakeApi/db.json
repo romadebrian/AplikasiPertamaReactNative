@@ -11,18 +11,6 @@
       "email": "roma 2@yahoo.com",
       "bidang": "IT",
       "id": 2
-    },
-    {
-      "name": "Roma Debrian 3",
-      "email": "romadebrian@yahoo.com",
-      "bidang": "IT",
-      "id": 3
-    },
-    {
-      "name": "TestTament2",
-      "email": "testTament2@gmaill.com",
-      "bidang": "Test2",
-      "id": 4
     }
   ]
 }

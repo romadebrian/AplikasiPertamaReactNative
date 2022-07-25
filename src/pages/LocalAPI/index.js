@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Image,
   StyleSheet,
@@ -10,7 +11,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import Axios from 'axios';
 
-const Item = ({name, email, bidang, onPress}) => {
+const Item = ({name, email, bidang, onPress, onDelete}) => {
   return (
     <View style={styles.itemContainer}>
       {/* <Image
@@ -32,7 +33,9 @@ const Item = ({name, email, bidang, onPress}) => {
         <Text style={styles.descEmail}>{email}</Text>
         <Text style={styles.descBidang}>{bidang}</Text>
       </View>
-      <Text style={styles.delete}>X</Text>
+      <TouchableOpacity onPress={onDelete}>
+        <Text style={styles.delete}>X</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -96,6 +99,15 @@ const LocalAPI = () => {
     setBidang(item.bidang);
     setButton('UPDATE');
   };
+
+  const deleteItem = item => {
+    console.log(item);
+
+    Axios.delete(`http://10.0.2.2:3000/users/${item.id}`).then(res => {
+      console.log(res);
+      getData();
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.texttitle}>Local API (Json Server)</Text>
@@ -129,6 +141,12 @@ const LocalAPI = () => {
             email={user.email}
             bidang={user.bidang}
             onPress={() => selectItem(user)}
+            onDelete={() =>
+              Alert.alert('Peringantan', 'Anda yakin mau menghapus akun ini?', [
+                {text: 'Tidak', onPress: () => console.log('button tidak')},
+                {text: 'Ya,', onPress: () => deleteItem(user)},
+              ])
+            }
           />
         );
       })}
