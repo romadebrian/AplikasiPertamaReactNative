@@ -1,20 +1,26 @@
 import {Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Axios from 'axios';
 
-const Item = second => {
+const Item = ({avatar, name, email, bidang}) => {
   return (
     <View style={styles.itemContainer}>
-      <Image
+      {/* <Image
         source={{
           uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzjBu8vdV53Wj1Gm0kA1on_lg3Lh1twHJtJg&usqp=CAU',
         }}
         style={styles.avatar}
+      /> */}
+      <Image
+        source={{
+          uri: `https://i.pravatar.cc/150?u=${email}`,
+        }}
+        style={styles.avatar}
       />
       <View style={styles.desc}>
-        <Text style={styles.descName}>Nama Lengkap</Text>
-        <Text style={styles.descEmail}>Emial</Text>
-        <Text style={styles.descBidang}>Bidang</Text>
+        <Text style={styles.descName}>{name}</Text>
+        <Text style={styles.descEmail}>{email}</Text>
+        <Text style={styles.descBidang}>{bidang}</Text>
       </View>
       <Text style={styles.delete}>X</Text>
     </View>
@@ -25,6 +31,11 @@ const LocalAPI = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [bidang, setBidang] = useState('');
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const submit = () => {
     const data = {
@@ -40,6 +51,14 @@ const LocalAPI = () => {
       setName('');
       setEmail('');
       setBidang('');
+      getData();
+    });
+  };
+
+  const getData = () => {
+    Axios.get('http://10.0.2.2:3000/users').then(res => {
+      console.log('res ', res);
+      setUsers(res.data);
     });
   };
   return (
@@ -66,9 +85,17 @@ const LocalAPI = () => {
       />
       <Button title="Simpan" onPress={submit} />
       <View style={styles.line} />
-      <Item />
-      <Item />
-      <Item />
+
+      {users.map(user => {
+        return (
+          <Item
+            key={user.id}
+            name={user.name}
+            email={user.email}
+            bidang={user.bidang}
+          />
+        );
+      })}
     </View>
   );
 };
