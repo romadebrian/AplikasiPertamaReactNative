@@ -1,5 +1,16 @@
 {
-  "posts": [{"id": 1, "title": "json-server", "author": "typicode"}],
-  "comments": [{"id": 1, "body": "some comment", "postId": 1}],
-  "profile": {"name": "typicode"}
+  "users": [
+    {
+      "id": 1,
+      "name": "Roma Debrian",
+      "email": "roma@yahoo.com",
+      "bidang": "IT"
+    },
+    {
+      "name": "Roma Debrian 2",
+      "email": "roma 2@yahoo.com",
+      "bidang": "IT",
+      "id": 2
+    }
+  ]
 }

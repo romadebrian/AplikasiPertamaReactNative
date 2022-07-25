@@ -1,5 +1,6 @@
 import {Button, Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
+import Axios from 'axios';
 
 const Item = second => {
   return (
@@ -21,14 +22,49 @@ const Item = second => {
 };
 
 const LocalAPI = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [bidang, setBidang] = useState('');
+
+  const submit = () => {
+    const data = {
+      name: name,
+      email: email,
+      bidang: bidang,
+    };
+
+    console.log('data before send ', data);
+
+    Axios.post('http://10.0.2.2:3000/users', data).then(res => {
+      console.log(res);
+      setName('');
+      setEmail('');
+      setBidang('');
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.texttitle}>Local API (Json Server)</Text>
       <Text>Masukan Anggota Kabayan Coding</Text>
-      <TextInput placeholder="Nama Lengkap" style={styles.input} />
-      <TextInput placeholder="Emial" style={styles.input} />
-      <TextInput placeholder="Bidang" style={styles.input} />
-      <Button title="Simpan" />
+      <TextInput
+        placeholder="Nama Lengkap"
+        style={styles.input}
+        value={name}
+        onChangeText={value => setName(value)}
+      />
+      <TextInput
+        placeholder="Emial"
+        style={styles.input}
+        value={email}
+        onChangeText={value => setEmail(value)}
+      />
+      <TextInput
+        placeholder="Bidang"
+        style={styles.input}
+        value={bidang}
+        onChangeText={value => setBidang(value)}
+      />
+      <Button title="Simpan" onPress={submit} />
       <View style={styles.line} />
       <Item />
       <Item />
